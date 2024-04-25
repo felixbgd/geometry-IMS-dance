@@ -242,7 +242,6 @@ fig.savefig(output_dir + '/PMs_explained-var.png', dpi=300, bbox_inches='tight')
 #%% 
 ##############################################################
 ############    FREQUENCY FILTERING OF THE PMs    ############
-############       (related to supp fig 8)        ############
 ##############################################################
 
 print('-------------------------------------------')
@@ -912,7 +911,7 @@ for effect in range(2):   # for main effects Vision or Music
 ##############################################################
 #####   PLOT THE RESULTS OF THE ANOVA WITH CLUSTERS      #####
 #####     3. GRAPH SHOWING THE PM-SPECIFIC ANOVAS        #####
-#####   (with F-value imagesc, related to supp fig 2)    #####
+#####   (with F-value imagesc, related to  fig S2)       #####
 ##############################################################
 
 import matplotlib.patheffects as pe
@@ -1001,7 +1000,7 @@ for effect in range(3):
 #%% 
 ##############################################################
 ######   GEOMETRY OF IMS - ANALYSIS 1: 3D spatial maps  ######
-######                (related to fig 3a)               ######
+######                (related to fig 3A)               ######
 ##############################################################
 
 # Output dir (to store results)
@@ -1123,7 +1122,7 @@ fig.savefig(output_dir + '/Geometry1_PMs_XYZ.png', dpi=300, bbox_inches='tight')
 ##############################################################
 ######    GEOMETRY OF IMS ANALYSIS 2: EIGENDIRECTIONS   ######
 ######             --> 2d PCA and classifier            ######
-######      (related to fig 3b,c,d and supp fig 6)      ######
+######            (related to figs 3B, 4 and S4)        ######
 ##############################################################
 
 NB_PM = 15
@@ -1237,7 +1236,7 @@ ed_opt = np.where(score_cv_ed==maxAcc)[0][idx_min] + 1  # Optimal eigendirection
 c_opt = Cs[np.where(score_cv_ed==maxAcc)[1][idx_min]]   # Optimal C value   
 
 
-## TEST CLASSIFIER ON SINGLE EIGENDIRECTIONS (related to supp fig 6e)
+## TEST CLASSIFIER ON SINGLE EIGENDIRECTIONS (related to fig 4B)
 print('Test accuracy of classifier for the different eigendirections...')
 # Compute classification accuracy
 score_ed_alone = np.zeros((NB_ed_CV)); score_ed_alone_err = np.zeros((NB_ed_CV))
@@ -1254,7 +1253,7 @@ plt.axhline(33,c='gray',linestyle='--'); plt.ylim((0,105))
 # fig.savefig(output_dir + '/Geometry2_eigendir_classifindiv.pdf', dpi=600, bbox_inches='tight');
 fig.savefig(output_dir + '/Geometry2_eigendir_classifindiv.png', dpi=300, bbox_inches='tight'); plt.close() 
 
-## SAME BUT NOW classification accuracy when using the 4 selective EDs (based on their activation + their 4 biggest classif accuracy) (related to supp fig 6f)
+## SAME BUT NOW classification accuracy when using the 4 selective EDs (based on their activation + their 4 biggest classif accuracy) (related to fig 4B)
 # Classif accuracy of the selective EDs together
 selEDs=np.array([0,1,4,5])
 weights_mean_selEDs, intercept_mean_selEDs, conf_mean_selEDs, proba_mean_selEDs, fold_scores_selEDs, class_model_selEDs = class_logReg(eigendir_scores[selEDs,:].T, y_train, NB_DYADS*2, ['Visual','Music','Visual+Music'], C=c_opt, multiclass='ovr')
@@ -1290,7 +1289,7 @@ fig.savefig(output_dir + '/Geometry2_eigendir_classifconf-selective.png', dpi=30
 ##############################################################
 ######    GEOMETRY OF IMS ANALYSIS 2: EIGENDIRECTIONS   ######
 ######            PLOT 1: eigendirection scores         ######
-######      (related to fig 3c,d and supp fig 6b,c)     ######
+######           (related to fig 3B and fig S4)         ######
 ##############################################################
 
 # Keep only the first 6 EDs
@@ -1360,7 +1359,7 @@ fig.savefig(output_dir + '/Geometry2_eigendir_scores_legend.png', dpi=300, bbox_
 ##############################################################
 ######    GEOMETRY OF IMS ANALYSIS 2: EIGENDIRECTIONS   ######
 ######           PLOT 2: eigendirection weights         ######
-######        (related to fig 3b and supp fig 6a)       ######
+######           (related to fig 3b and fig S4)         ######
 ##############################################################
 
 label_mod = ['Partner-driven','Music-driven','Both (PM 10)']
@@ -1457,7 +1456,7 @@ plt.savefig(output_dir + '/Geometry2_eigendir_weights1.png', dpi=300, bbox_inche
 ######    TEMPORAL ORGANIZATION OF IMS: EIGENPERIODS    ######
 ######        2d PCA + classifier on periodicity        ######
 ######     Code is same as above, but on periodicity    ######
-######              (related to supp fig 7)             ######
+######         (related to fig 4 and fig S4)            ######
 ##############################################################
 
 # Output dir (to store results)
@@ -1542,7 +1541,7 @@ ep_opt = np.where(score_cv_ep==maxAcc)[0][idx_min] + 1  # Optimal eigenperiod nu
 c_opt = Cs[np.where(score_cv_ep==maxAcc)[1][idx_min]]   # Optimal C value  
 
 
-## TEST CLASSIFIER ON SINGLE EIGENPERIODS (related to supp fig 7e)
+## TEST CLASSIFIER ON SINGLE EIGENPERIODS
 print('Test accuracy of classifier for the different eigenperiods...')
 # Compute classification accuracy
 score_ep_alone = np.zeros((NB_ep_CV)); score_ep_alone_err = np.zeros((NB_ep_CV))
@@ -1559,7 +1558,7 @@ plt.axhline(33,c='gray',linestyle='--'); plt.ylim((0,105))
 # fig.savefig(output_dir + '/Temporal_eigenper_classifindiv.pdf', dpi=600, bbox_inches='tight');
 fig.savefig(output_dir + '/Temporal_eigenper_classifindiv.png', dpi=300, bbox_inches='tight'); plt.close() 
 
-## SAME BUT NOW classification accuracy when using the 2 selective EPs (based on their activation + the 2 biggest classif accuracy) (related to supp fig 7f)
+## SAME BUT NOW classification accuracy when using the 2 selective EPs (based on their activation + the 2 biggest classif accuracy) 
 # Classif accuracy of the selective EPs together
 selEPs=np.array([0,3])
 weights_mean_selEPs, intercept_mean_selEPs, conf_mean_selEPs, proba_mean_selEPs, fold_scores_selEPs, class_model_selEPs = class_logReg(eigenper_scores[selEPs,:].T, y_train, NB_DYADS, ['Visual','Music','Visual+Music'], C=c_opt, multiclass='ovr')
@@ -1596,7 +1595,7 @@ fig.savefig(output_dir + '/Temporal_eigenper_classifconf-selective.png', dpi=300
 ##############################################################
 ######    TEMPORAL ORGANIZATION OF IMS: EIGENPERIODS    ######
 ######             PLOT 1: eigenperiod scores           ######
-######             (related to supp fig 7b,c)           ######
+######             (related to fig 4 and fig S4)        ######
 ##############################################################
 
 # Keep only the first 5 EPs
@@ -1662,7 +1661,7 @@ fig.savefig(output_dir + '/Temporal_eigenper_scores_legend.png', dpi=300, bbox_i
 ##############################################################
 ######    TEMPORAL ORGANIZATION OF IMS: EIGENPERIODS    ######
 ######            PLOT 2: eigenperiod weights           ######
-######              (related to supp fig 7a)            ######
+######           (related to fig 4 and fig S4)          ######
 ##############################################################
     
 label_mod = ['Partner-driven','Music-driven','Both (PM 10)']

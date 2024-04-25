@@ -15,7 +15,6 @@ Created on Fri Jul  7 15:05:39 2023
 from PLmocap.viz import *
 from PLmocap.preprocessing import *
 from PLmocap.classif import *
-from PLmocap.stats import *
 # MNE Python (Gramfort et al.) with minor bug fixed for cluster-based permutation
 import mne_fefe
 
@@ -261,6 +260,7 @@ for i in range(NB_DYADS*2):
     if i in [62,63]: nbTr = NB_TRIALS - 1
     else: nbTr = NB_TRIALS
     for tr in range(nbTr):
+        songsTrial = song[:,i//2,tr]
         tStop = int( min(musParts_tFrames[songsTrial , -1]) * fps ) # take the end frame of the shortest song between two subjects    
         PM_scores_time[iStart:iStart+tStop,:] = signal.filtfilt(b, a, PM_scores_time[iStart:iStart+tStop,:], axis=0)
         
@@ -645,7 +645,7 @@ for pm in range(NB_PM):
 ##############################################################
 #####  PLOT THE RESULTS OF THE ANOVA WITH CLUSTERS       #####
 #####     2. GRAPH SHOWING THE PM-SPECIFIC ANOVAS        #####
-#####   (with F-value imagesc, related to supp fig 3)    #####
+#####     (with F-value imagesc, related to fig S1)      #####
 ##############################################################
 
 import matplotlib.patheffects as pe
