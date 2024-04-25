@@ -15,7 +15,6 @@ Created on Fri Jul  7 15:05:39 2023
 from PLmocap.viz import *
 from PLmocap.preprocessing import *
 from PLmocap.classif import *
-from PLmocap.stats import *
 # MNE Python (Gramfort et al.) with minor bug fixed for cluster-based permutation
 import mne_fefe
 
@@ -293,6 +292,7 @@ for i in range(NB_DYADS*2):
     if i in [62,63]: nbTr = NB_TRIALS - 1
     else: nbTr = NB_TRIALS
     for tr in range(nbTr):
+        songsTrial = song[:,i//2,tr]
         tStop = int( min(musParts_tFrames[songsTrial , -1]) * fps ) # take the end frame of the shortest song between two subjects    
         PM_scores_time[iStart:iStart+tStop,:] = signal.filtfilt(b, a, PM_scores_time[iStart:iStart+tStop,:], axis=0)
         
@@ -1219,7 +1219,7 @@ print('LOOO Cross-validation...')
 ## SET RIDGE LOGISTIC REGRESSION 'one-versus-rest' to test how eigendirections can predict the PM class
 y_train = PM_label[(PM_label==0) | (PM_label==1) | (PM_label==2)]       # Labels (PM class)
 Cs = np.hstack((10**np.arange(-3.0,4.0)))                               # C parameter to optimize/validate
-NB_ed_CV = 20; NB_C_CV = len(Cs)                                        # Number of eigendirections and C values to optimize/cross validate
+NB_ed_CV = 10; NB_C_CV = len(Cs)                                        # Number of eigendirections and C values to optimize/cross validate
 score_cv_ed = np.zeros((NB_ed_CV , NB_C_CV))
 score_cv_ed_err = np.zeros((NB_ed_CV , NB_C_CV))
 for ed in range(1,NB_ed_CV+1):                                          # Find optimal number of eigendirection, and C value; through cross validation
@@ -1524,7 +1524,7 @@ print('LOOO Cross-validation...')
 ## SET RIDGE LOGISTIC REGRESSION 'one-versus-rest' to test how eigenperiods can predict the PM class
 y_train = PM_label[(PM_label==0) | (PM_label==1) | (PM_label==2)]       # Labels (PM class)
 Cs = np.hstack((10**np.arange(-3.0,4.0)))                               # C parameter to optimize/validate
-NB_ep_CV = 20; NB_C_CV = len(Cs)                                        # Number of eigenperiods and C values to optimize/cross validate
+NB_ep_CV = 10; NB_C_CV = len(Cs)                                        # Number of eigenperiods and C values to optimize/cross validate
 score_cv_ep = np.zeros((NB_ep_CV , NB_C_CV))
 score_cv_ep_err = np.zeros((NB_ep_CV , NB_C_CV))
 for ep in range(1,NB_ep_CV+1):
